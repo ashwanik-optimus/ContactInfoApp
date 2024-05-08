@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ContactInfoApp.Views.UserDetailsPage"
+             xmlns:vm ="clr-namespace:ContactInfoApp.ViewModels"
+             xmlns:model ="clr-namespace:ContactInfoApp.Models"
+             Title="{Binding Title}"
+             x:DataType="vm:UserDetailsViewModel">
+
+    <StackLayout Padding="10" HorizontalOptions="Center">
+        <Image Source="{Binding User.ProfilePicture}" HeightRequest="20"  />
+        <Label Text="{Binding User.Name}" FontSize="18"/>
+    </StackLayout>
+
+</ContentPage>
