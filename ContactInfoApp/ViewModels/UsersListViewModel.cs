@@ -12,12 +12,16 @@ namespace ContactInfoApp.ViewModels
     {
         public ObservableCollection<User> Users { get; private set; } = new();
 
+       
 
         [ObservableProperty]
         bool isRefreshing;
-        public UsersListViewModel()
+
+        IUserService userService;
+
+        public UsersListViewModel(IUserService userService)
         {
-            Title = "User List";
+            this.userService = userService;
         }
 
         [RelayCommand]
@@ -32,7 +36,7 @@ namespace ContactInfoApp.ViewModels
                 {
                     Users.Clear();
                 }
-                var users = App.UserService.GetUsers();
+                var users = userService.GetUsers();
                 foreach (var user in users)
                 {
                     Users.Add(user);
@@ -51,11 +55,26 @@ namespace ContactInfoApp.ViewModels
         }
 
         [RelayCommand]
-        async Task GetUserDetails(int id)
+        async Task GoToUserDetails(int id)
         {
             if (id == 0) return;
 
             await Shell.Current.GoToAsync($"{nameof(UserDetailsPage)}?Id={id}", true);
         }
+
+        [RelayCommand]
+        async Task DeleteUserDetails(int id)
+        {
+            userService.DeleteUser(id);
+            await GetUserList();
+        }
+
+        [RelayCommand]
+        async Task AddNewUserDetails()
+        {
+            await Shell.Current.GoToAsync($"{nameof(AddEditUserDetailsPage)}?Id=0", true);
+        }
+
+
     }
 }

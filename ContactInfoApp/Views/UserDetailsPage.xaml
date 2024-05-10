@@ -7,9 +7,53 @@
              Title="{Binding Title}"
              x:DataType="vm:UserDetailsViewModel">
 
-    <StackLayout Padding="10" HorizontalOptions="Center">
-        <Image Source="{Binding User.ProfilePicture}" HeightRequest="20"  />
-        <Label Text="{Binding User.Name}" FontSize="18"/>
-    </StackLayout>
+    <StackLayout Padding="10" HorizontalOptions="Center" Margin="10" WidthRequest="300">
+        <Frame HeightRequest="140"
+                   WidthRequest="140"
+                   CornerRadius="70"
+                   HorizontalOptions="Center"
+                   IsClippedToBounds="True"
+                   Padding="0"
+                   BorderColor="Gray"
+                   Margin="0,0,0,0">
 
+            <Image
+                    Aspect="AspectFit"
+                    Source="{Binding ProfilePicture}"
+                    HeightRequest="180"
+                    WidthRequest="180"
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center" />
+        </Frame>
+        <Label Text="{Binding Sex}" FontSize="18" TextColor="Red" HorizontalTextAlignment="Center" Margin="0,0,0,50"/>
+        <Frame BorderColor="Black" Padding="5" CornerRadius="10" BackgroundColor="LightGrey">
+            <Frame.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:UserDetailsViewModel}}, Path=SendMailCommand }"/>
+            </Frame.GestureRecognizers>
+            <HorizontalStackLayout Spacing="15" Padding="10">
+                <Image Source="email.png" HeightRequest="20"/>
+                <Label Text="{Binding Email}" FontSize="18" VerticalOptions="Center" TextColor="Black" />
+            </HorizontalStackLayout>
+        </Frame>
+        <Frame BorderColor="Black" Padding="5" CornerRadius="10" >
+            <Frame.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:UserDetailsViewModel}}, Path=StartDialerCommand }"/>
+            </Frame.GestureRecognizers>
+            <HorizontalStackLayout Spacing="15" Padding="10">
+                <Image Source="phone.png" HeightRequest="20"/>
+                <Label Text="{Binding MobileNumber}" FontSize="18" VerticalOptions="Center" TextColor="Black" />
+            </HorizontalStackLayout>
+        </Frame>
+
+        <Frame BorderColor="Black" CornerRadius="10" VerticalOptions="FillAndExpand">
+            <Frame.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:UserDetailsViewModel}}, Path=StartNavigationCommand }"/>
+            </Frame.GestureRecognizers>
+            <HorizontalStackLayout Spacing="15" Padding="10">
+                <Image Source="location.png" HeightRequest="20"/>
+                <Label Text="{Binding Address}" FontSize="18" VerticalOptions="Center" TextColor="Black" />
+            </HorizontalStackLayout>
+        </Frame>
+        <Button Text="Edit Details" BackgroundColor="Green" VerticalOptions="EndAndExpand" Command="{Binding UpdateUserCommand}" Margin="9"/>
+    </StackLayout>
 </ContentPage>

@@ -16,7 +16,9 @@ namespace ContactInfoApp.ViewModels
         [NotifyPropertyChangedFor(nameof(IsNotLoading))]
         bool isLoading;
 
-        public bool IsNotLoading => !IsLoading;
+        [ObservableProperty]
+        string addEditButtonText;
 
+        public bool IsNotLoading => !IsLoading;
     }
 }

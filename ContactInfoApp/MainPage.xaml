@@ -1,35 +1,50 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+<ContentPage NavigationPage.HasNavigationBar="true" 
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:fab="http://schemas.android.com/apk/res-auto"
              x:Class="ContactInfoApp.MainPage"
              xmlns:model ="clr-namespace:ContactInfoApp.Models"
              xmlns:viewModel ="clr-namespace:ContactInfoApp.ViewModels"
              x:DataType = "viewModel:UsersListViewModel"
-             Title="{Binding Title}">
+             Title="{Binding Title}"
+             >
 
-    <Grid ColumnDefinitions="*" RowDefinitions="*, auto" RowSpacing="10">
-        <RefreshView Command="{Binding GetUserListCommand}" IsRefreshing="{Binding IsRefreshing}">
+    <Grid ColumnDefinitions="*, *" RowDefinitions="*, auto" RowSpacing="10">
+        <RefreshView Command="{Binding GetUserListCommand}" IsRefreshing="{Binding IsRefreshing}" Grid.ColumnSpan="2">
             <CollectionView ItemsSource="{Binding Users}" SelectionMode="None">
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="model:User">
-                        <Frame HeightRequest="80" Padding="5" BorderColor="Chocolate" CornerRadius="15" >
-                            <Frame.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewModel:UsersListViewModel}}, Path=GetUserDetailsCommand }" 
+                        <SwipeView>
+                            <SwipeView.LeftItems>
+                                <SwipeItems>
+                                    <SwipeItem Text="Delete"
+                                       IconImageSource="delete.png"
+                                       BackgroundColor="LightPink"
+                                       Command="{Binding Source={RelativeSource AncestorType={x:Type viewModel:UsersListViewModel}}, Path=DeleteUserDetailsCommand }" 
                                                           CommandParameter="{Binding Id}" />
-                            </Frame.GestureRecognizers>
-                            <HorizontalStackLayout Padding="12" Spacing="15" VerticalOptions="Start">
-                                <Image Source="{Binding ProfilePicture}" HeightRequest="50" WidthRequest="50"/>
-                                <VerticalStackLayout>
-                                    <Label Text="{Binding Name}" TextColor="Green" VerticalOptions="Start"></Label>
-                                    <Label Text="{Binding Email}" TextColor="Blue" VerticalOptions="Start" ></Label>
-                                </VerticalStackLayout>
-                            </HorizontalStackLayout>
-                        </Frame>
+                                </SwipeItems>
+                            </SwipeView.LeftItems>
+                            <Frame HeightRequest="80" Padding="5" BorderColor="Chocolate" CornerRadius="15" >
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewModel:UsersListViewModel}}, Path=GoToUserDetailsCommand }" 
+                                                          CommandParameter="{Binding Id}" />
+                                </Frame.GestureRecognizers>
+                                <HorizontalStackLayout Padding="12" Spacing="15" VerticalOptions="Start">
+                                    <Image Source="{Binding ProfilePicture}" HeightRequest="50" WidthRequest="50"/>
+                                    <VerticalStackLayout>
+                                        <Label Text="{Binding Name}" TextColor="Green" VerticalOptions="Start"></Label>
+                                        <Label Text="{Binding Email}" TextColor="Blue" VerticalOptions="Start" ></Label>
+                                    </VerticalStackLayout>
+                                </HorizontalStackLayout>
+                            </Frame>
+                        </SwipeView>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
         </RefreshView>
-        <Button Text="GetUsers" Command="{Binding GetUserListCommand}" IsEnabled="{Binding IsNotLoading}" Grid.Row="1" Grid.Column="0"/>
+        <Button Text="GetUsers" Margin="5" Command="{Binding GetUserListCommand}" IsEnabled="{Binding IsNotLoading}" Grid.Row="1" Grid.Column="0"/>
+        <Button Text="AddUser" Margin="5" Command="{Binding AddNewUserDetailsCommand}" BackgroundColor="Green" Grid.Row="1" Grid.Column="1"/>
 
     </Grid>
 

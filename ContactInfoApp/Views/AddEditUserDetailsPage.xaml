@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ContactInfoApp.Views.AddEditUserDetailsPage"
+             xmlns:vm ="clr-namespace:ContactInfoApp.ViewModels"
+             xmlns:model ="clr-namespace:ContactInfoApp.Models"
+             Title="{Binding Title}"
+             x:DataType="vm:AddEditViewModel">   
+    <Grid ColumnSpacing="1" RowSpacing="1" Padding="5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        
+        
+
+        <HorizontalStackLayout Padding="5" Grid.Row="0" Margin="9" HorizontalOptions="Center">
+            <Image x:Name="selectedImage"  Source="{Binding ProfilePicture}" HeightRequest="100"
+                   />
+            <Button x:Name="addImage" Text="+" HeightRequest="40" WidthRequest="40"  TextColor="Red"
+                    VerticalOptions="End" BackgroundColor="Grey"
+                    CornerRadius="50" FontSize="Medium"
+                    Command="{Binding SelectMediaCommand}"/>
+        </HorizontalStackLayout>
+        <HorizontalStackLayout Grid.Row="1" Margin="9">
+            <Label Text="Select Gender" VerticalTextAlignment="Center"/>
+            <RadioButton Content="Male"  />
+            <RadioButton Content="Female" IsChecked="true" />
+        </HorizontalStackLayout>
+
+        <VerticalStackLayout Padding="5" Grid.Row="2" Margin="9">
+            <Entry x:Name="Name" Placeholder="Enter Name" Text="{Binding Name}" />
+            <Entry x:Name="Mobile" Placeholder="Enter Mobile Number" Text="{Binding MobileNumber}"/>
+            <Entry x:Name="Email" Placeholder="Enter Email" Text="{Binding Email}"/>
+            <Entry x:Name="Address" Placeholder="Enter Address" Text="{Binding Address}"/>
+        </VerticalStackLayout>
+
+
+        <Button Text="{Binding SaveEditText}" Grid.Row="3" IsEnabled="{Binding IsNotLoading}"
+            Command="{Binding AddUserCommand}" Margin="9" />
+
+        <Button Text="Clear Form" Command="{Binding ClearFormCommand}" IsEnabled="{Binding IsNotLoading}" 
+            Grid.Row="4" Margin="9"/>
+    </Grid>
+</ContentPage>

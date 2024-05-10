@@ -8,6 +8,7 @@ namespace ContactInfoApp
         {
             InitializeComponent();
             Routing.RegisterRoute(nameof(UserDetailsPage), typeof(UserDetailsPage));
+            Routing.RegisterRoute(nameof(AddEditUserDetailsPage), typeof(AddEditUserDetailsPage));
 
         }
     }

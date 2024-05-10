@@ -5,9 +5,9 @@ namespace ContactInfoApp
     public partial class App : Application
     {
 
-        public static UserService UserService { get; private set; }
+        public static IUserService UserService { get; private set; }
 
-        public App(UserService userService)
+        public App(IUserService userService)
         {
             InitializeComponent();
 
