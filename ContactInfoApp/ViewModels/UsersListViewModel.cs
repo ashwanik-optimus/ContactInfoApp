@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using ContactInfoApp.Models;
 using ContactInfoApp.Services;
 using ContactInfoApp.Views;
+using Plugin.Maui.Biometric;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 
@@ -17,7 +18,7 @@ namespace ContactInfoApp.ViewModels
         [ObservableProperty]
         bool isRefreshing;
 
-        IUserService userService;
+        readonly IUserService userService;
 
         public UsersListViewModel(IUserService userService)
         {
@@ -72,7 +73,15 @@ namespace ContactInfoApp.ViewModels
         [RelayCommand]
         async Task AddNewUserDetails()
         {
-            await Shell.Current.GoToAsync($"{nameof(AddEditUserDetailsPage)}?Id=0", true);
+            var result = await BiometricAuthenticationService.Default.AuthenticateAsync(new AuthenticationRequest()
+            {
+                Title = "Please authenticate to add user",
+                NegativeText = "Cancel"
+            }, CancellationToken.None);
+            if ((result.Status == BiometricResponseStatus.Success))
+            {
+                await Shell.Current.GoToAsync($"{nameof(AddEditUserDetailsPage)}?Id=0", true);
+            }
         }
 
 

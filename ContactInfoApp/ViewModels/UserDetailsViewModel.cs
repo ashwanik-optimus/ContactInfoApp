@@ -16,8 +16,7 @@ namespace ContactInfoApp.ViewModels
     [QueryProperty(nameof(Id), nameof(Id))]
     public partial class UserDetailsViewModel : AddEditViewModel, IQueryAttributable
     {
-        //[ObservableProperty]
-        //User user;
+        private User _user;
 
         [ObservableProperty]
         int id;
@@ -27,7 +26,7 @@ namespace ContactInfoApp.ViewModels
 
         }
 
-        public void ApplyQueryAttributes(IDictionary<string, object> query)
+        public new void ApplyQueryAttributes(IDictionary<string, object> query)
         {
             Id = Convert.ToInt32(HttpUtility.UrlDecode(query["Id"].ToString()));
             GetUserDetails(Id);
@@ -35,27 +34,77 @@ namespace ContactInfoApp.ViewModels
         }
 
         [RelayCommand]
-        async Task SendMail()
+        async static Task SendMail()
         {
-            await Shell.Current.DisplayAlert("b hjhvh", "hjvhjvjh", "OK");
-        }
+            var result = await Shell.Current.DisplayAlert("Send Mail", $"Do you want to send mail to user? ", "OK", "Cancel");
+            if(result)
+            {
+                await SendEMail();
+
+            }
+        } 
 
         [RelayCommand]
-        async Task StartDialer()
+        async static Task StartDialer()
         {
-            await Shell.Current.DisplayAlert("b hjhvh", "hjvhjvjh", "OK");
+            var result = await Shell.Current.DisplayAlert("Call", "Do you want to send mail to user? ", "OK", "Cancel");
+            if (result)
+            {
+                if (PhoneDialer.Default.IsSupported)
+                    PhoneDialer.Default.Open("809-555-5454");
+            }
         }
 
         [RelayCommand]
         async Task StartNavigation()
         {
-            await Shell.Current.DisplayAlert("b hjhvh", "hjvhjvjh", "OK");
+            var result = await Shell.Current.DisplayAlert("Start navigation", "Do you want to start navigation to user's address? ", "OK", "Cancel");
+            if (result)
+            {
+                await NavigateToBuilding25();
+            }
         }
 
         [RelayCommand]
         async Task UpdateUser()
         {
             await Shell.Current.GoToAsync($"{nameof(AddEditUserDetailsPage)}?Id={Id}", true);
+        }
+
+        private async Task NavigateToBuilding25()
+        {
+            var location = new Location(47.645160, -122.1306032);
+            var options = new MapLaunchOptions { Name = "Microsoft Building 25" };
+
+            try
+            {
+                await Map.Default.OpenAsync(location, options);
+            }
+            catch (Exception ex)
+            {
+                // No map application available to open
+            }
+        }
+
+        private static async Task SendEMail()
+        {
+            if (Microsoft.Maui.ApplicationModel.Communication.Email.Default.IsComposeSupported)
+            {
+
+                string subject = "Hello friends!";
+                string body = "It was great to see you last weekend.";
+                string[] recipients = new[] { "john@contoso.com", "jane@contoso.com" };
+
+                var message = new EmailMessage
+                {
+                    Subject = subject,
+                    Body = body,
+                    BodyFormat = EmailBodyFormat.PlainText,
+                    To = new List<string>(recipients)
+                };
+
+                await Microsoft.Maui.ApplicationModel.Communication.Email.Default.ComposeAsync(message);
+            }
         }
 
     }

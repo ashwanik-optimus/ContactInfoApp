@@ -6,6 +6,30 @@
              xmlns:model ="clr-namespace:ContactInfoApp.Models"
              Title="{Binding Title}"
              x:DataType="vm:UserDetailsViewModel">
+    <ContentPage.Resources>
+        <Style x:Key="labelRedStyle"
+               TargetType="Label">
+            <Setter Property="HorizontalOptions" Value="Center" />
+            <Setter Property="VerticalOptions" Value="Center" />
+            <Setter Property="FontSize" Value="18" />
+            <Setter Property="TextColor" Value="Red" />
+        </Style>
+        <Style x:Key="labelGreenStyle"
+               TargetType="Label">
+            <Setter Property="HorizontalOptions" Value="Center" />
+            <Setter Property="VerticalOptions" Value="Center" />
+            <Setter Property="FontSize" Value="18" />
+            <Setter Property="TextColor" Value="Green" />
+        </Style>
+        <Style x:Key="labelBlueStyle"
+               TargetType="Label">
+            <Setter Property="HorizontalOptions" Value="CenterAndExpand" />
+            <Setter Property="VerticalOptions" Value="EndAndExpand" />
+            <Setter Property="FontSize" Value="18" />
+            <Setter Property="TextColor" Value="Yellow" />
+        </Style>
+    </ContentPage.Resources>
+
 
     <StackLayout Padding="10" HorizontalOptions="Center" Margin="10" WidthRequest="300">
         <Frame HeightRequest="140"
@@ -25,7 +49,8 @@
                     VerticalOptions="Center"
                     HorizontalOptions="Center" />
         </Frame>
-        <Label Text="{Binding Sex}" FontSize="18" TextColor="Red" HorizontalTextAlignment="Center" Margin="0,0,0,50"/>
+        <Label Text="{Binding Sex}" Style="{StaticResource labelRedStyle}"
+               FontSize="18" TextColor="Red" HorizontalTextAlignment="Center" Margin="0,0,0,50"/>
         <Frame BorderColor="Black" Padding="5" CornerRadius="10" BackgroundColor="LightGrey">
             <Frame.GestureRecognizers>
                 <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:UserDetailsViewModel}}, Path=SendMailCommand }"/>
@@ -41,7 +66,7 @@
             </Frame.GestureRecognizers>
             <HorizontalStackLayout Spacing="15" Padding="10">
                 <Image Source="phone.png" HeightRequest="20"/>
-                <Label Text="{Binding MobileNumber}" FontSize="18" VerticalOptions="Center" TextColor="Black" />
+                <Label Text="{Binding MobileNumber}" Style="{StaticResource labelGreenStyle}" VerticalOptions="Center"/>
             </HorizontalStackLayout>
         </Frame>
 
@@ -54,6 +79,6 @@
                 <Label Text="{Binding Address}" FontSize="18" VerticalOptions="Center" TextColor="Black" />
             </HorizontalStackLayout>
         </Frame>
-        <Button Text="Edit Details" BackgroundColor="Green" VerticalOptions="EndAndExpand" Command="{Binding UpdateUserCommand}" Margin="9"/>
+        <Button Text="Edit Details" Style="{StaticResource labelBlueStyle}" Command="{Binding UpdateUserCommand}" Margin="9"/>
     </StackLayout>
 </ContentPage>

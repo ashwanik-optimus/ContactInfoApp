@@ -2,6 +2,7 @@
 using ContactInfoApp.ViewModels;
 using ContactInfoApp.Views;
 using Microsoft.Extensions.Logging;
+using Plugin.Maui.Biometric;
 
 namespace ContactInfoApp
 {
@@ -20,6 +21,8 @@ namespace ContactInfoApp
 
             string dbPath = Path.Combine(FileSystem.AppDataDirectory, "contacts.db2");
             builder.Services.AddSingleton<IUserService>(s => ActivatorUtilities.CreateInstance<UserService>(s, dbPath));
+
+            builder.Services.AddSingleton<IBiometric>(BiometricAuthenticationService.Default);
 
             builder.Services.AddSingleton<UsersListViewModel>();
             builder.Services.AddSingleton<UserDetailsViewModel>();

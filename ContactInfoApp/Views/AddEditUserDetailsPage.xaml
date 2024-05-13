@@ -28,10 +28,10 @@
                     CornerRadius="50" FontSize="Medium"
                     Command="{Binding SelectMediaCommand}"/>
         </HorizontalStackLayout>
-        <HorizontalStackLayout Grid.Row="1" Margin="9">
+        <HorizontalStackLayout RadioButtonGroup.GroupName="Gender" Grid.Row="1" Margin="9">
             <Label Text="Select Gender" VerticalTextAlignment="Center"/>
-            <RadioButton Content="Male"  />
-            <RadioButton Content="Female" IsChecked="true" />
+            <RadioButton Content="Male" IsChecked= "{Binding IsMale}"/>
+            <RadioButton Content="Female"/>
         </HorizontalStackLayout>
 
         <VerticalStackLayout Padding="5" Grid.Row="2" Margin="9">

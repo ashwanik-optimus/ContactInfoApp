@@ -13,7 +13,7 @@ namespace ContactInfoApp.Services
     {
 
         private SQLiteConnection _connection;
-        private string _dbPath;
+        private readonly string _dbPath;
         public string StatusMessage;
         int result = 0;
 
@@ -85,7 +85,7 @@ namespace ContactInfoApp.Services
                 result = _connection.Insert(user);
                 StatusMessage = result == 0 ? "Insert Failed" : "Insert Successful";
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 StatusMessage = "Failed to Insert data.";
             }
@@ -103,7 +103,7 @@ namespace ContactInfoApp.Services
                 result = _connection.Update(user);
                 StatusMessage = result == 0 ? "Update Failed" : "Update Successful";
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 StatusMessage = "Failed to Update data.";
             }

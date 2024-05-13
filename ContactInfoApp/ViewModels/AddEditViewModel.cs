@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using ContactInfoApp.Models;
+using ContactInfoApp.Resources;
 using ContactInfoApp.Services;
 using System.Web;
 
@@ -30,7 +31,10 @@ namespace ContactInfoApp.ViewModels
         string profilePicture = "select3.png";
 
         [ObservableProperty]
-        string saveEditText = "Add User";
+        string saveEditText = Constants.ADDUSER;
+
+        [ObservableProperty]
+        bool isMale;
 
         protected IUserService userService;
 
@@ -47,7 +51,6 @@ namespace ContactInfoApp.ViewModels
             {
                 GetUserDetails(_userId);
             }
-            //var _user = App.UserService.GetUser(id);
         }
 
         [RelayCommand]
@@ -62,7 +65,7 @@ namespace ContactInfoApp.ViewModels
                 Sex = user.Sex;
                 Address = user.Address;
                 ProfilePicture = user.ProfilePicture;
-                SaveEditText = "Update User";
+                SaveEditText = Constants.UPDATEUSER;
             }
         }
 
@@ -80,12 +83,12 @@ namespace ContactInfoApp.ViewModels
                 Name = Name,
                 Email = Email,
                 MobileNumber = MobileNumber,
-                Sex = Sex,
+                Sex = IsMale ? Constants.MALE : Constants.FEMALE,
                 Address = Address,
                 ProfilePicture = ProfilePicture,
             };
 
-            if (string.Equals(SaveEditText, "Update User"))
+            if (string.Equals(SaveEditText, Constants.UPDATEUSER))
             {
                 user.Id = _userId;
                 userService.UpdateUser(user);
@@ -93,15 +96,14 @@ namespace ContactInfoApp.ViewModels
             else
             {
                 userService.AddUser(user);
-                await ClearForm();
+                ClearForm();
             }
             await Shell.Current.GoToAsync("..");
         }
 
         [RelayCommand]
-        async Task ClearForm()
+        private void ClearForm()
         {
-            //AddEditButtonText = createButtonText;
             Name = string.Empty;
             MobileNumber = string.Empty;
             Address = string.Empty;
@@ -113,7 +115,7 @@ namespace ContactInfoApp.ViewModels
         [RelayCommand]
         async Task SelectMedia()
         {
-            var selection = await Shell.Current.DisplayActionSheet("Select Picture", "Cancel", null, new string[] { "Gallery", "Camera" });
+            var selection = await Shell.Current.DisplayActionSheet("Select Picture", "Cancel", null, ["Gallery", "Camera"]);
 
             if (string.Equals(selection, "Cancel")) { return; }
 
