@@ -3,12 +3,6 @@ using CommunityToolkit.Mvvm.Input;
 using ContactInfoApp.Models;
 using ContactInfoApp.Services;
 using ContactInfoApp.Views;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.ConstrainedExecution;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web;
 
 namespace ContactInfoApp.ViewModels
@@ -47,7 +41,7 @@ namespace ContactInfoApp.ViewModels
         [RelayCommand]
         async static Task StartDialer()
         {
-            var result = await Shell.Current.DisplayAlert("Call", "Do you want to send mail to user? ", "OK", "Cancel");
+            var result = await Shell.Current.DisplayAlert("Call", "Do you want to call user? ", "OK", "Cancel");
             if (result)
             {
                 if (PhoneDialer.Default.IsSupported)
@@ -80,7 +74,7 @@ namespace ContactInfoApp.ViewModels
             {
                 await Map.Default.OpenAsync(location, options);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 // No map application available to open
             }
