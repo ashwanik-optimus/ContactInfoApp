@@ -13,16 +13,14 @@ namespace ContactInfoApp.ViewModels
     {
         public ObservableCollection<User> Users { get; private set; } = new();
 
-       
-
         [ObservableProperty]
-        bool isRefreshing;
+        private bool _isRefreshing;
 
-        readonly IUserService userService;
+        private readonly IUserService _userService;
 
         public UsersListViewModel(IUserService userService)
         {
-            this.userService = userService;
+            this._userService = userService;
         }
 
         [RelayCommand]
@@ -37,7 +35,7 @@ namespace ContactInfoApp.ViewModels
                 {
                     Users.Clear();
                 }
-                var users = userService.GetUsers();
+                var users = _userService.GetUsers();
                 foreach (var user in users)
                 {
                     Users.Add(user);
@@ -66,7 +64,7 @@ namespace ContactInfoApp.ViewModels
         [RelayCommand]
         async Task DeleteUserDetails(int id)
         {
-            userService.DeleteUser(id);
+            _userService.DeleteUser(id);
             await GetUserList();
         }
 

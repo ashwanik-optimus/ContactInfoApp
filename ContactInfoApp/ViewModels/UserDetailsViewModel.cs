@@ -8,12 +8,11 @@ using System.Web;
 namespace ContactInfoApp.ViewModels
 {
     [QueryProperty(nameof(Id), nameof(Id))]
-    public partial class UserDetailsViewModel : AddEditViewModel, IQueryAttributable
+    public partial class UserDetailsViewModel : AddEditUserDetailsViewModel, IQueryAttributable
     {
-        private User _user;
 
         [ObservableProperty]
-        int id;
+        private int _id;
 
         public UserDetailsViewModel(IUserService userService) : base(userService)
         {
@@ -24,7 +23,7 @@ namespace ContactInfoApp.ViewModels
         {
             Id = Convert.ToInt32(HttpUtility.UrlDecode(query["Id"].ToString()));
             GetUserDetails(Id);
-            Title = $"Welcome {Name}";
+            Title = $"Welcome {SelectedUser.Name}";
         }
 
         [RelayCommand]

@@ -3,7 +3,7 @@
              xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:fab="http://schemas.android.com/apk/res-auto"
-             x:Class="ContactInfoApp.MainPage"
+             x:Class="ContactInfoApp.UsersListPage"
              xmlns:model ="clr-namespace:ContactInfoApp.Models"
              xmlns:viewModel ="clr-namespace:ContactInfoApp.ViewModels"
              x:DataType = "viewModel:UsersListViewModel"

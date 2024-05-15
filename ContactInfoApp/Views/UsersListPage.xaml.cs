@@ -2,9 +2,9 @@
 
 namespace ContactInfoApp
 {
-    public partial class MainPage : ContentPage
+    public partial class UsersListPage : ContentPage
     {
-        public MainPage(UsersListViewModel usersListViewModel)
+        public UsersListPage(UsersListViewModel usersListViewModel)
         {
             InitializeComponent();
             BindingContext = usersListViewModel;

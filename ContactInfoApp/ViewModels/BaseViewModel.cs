@@ -5,14 +5,14 @@ namespace ContactInfoApp.ViewModels
     public partial class BaseViewModel: ObservableObject
     {
         [ObservableProperty]
-        string title;
+        private string title;
 
         [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(IsNotLoading))]
-        bool isLoading;
+        private bool isLoading;
 
         [ObservableProperty]
-        string addEditButtonText;
+        private string addEditButtonText;
 
         public bool IsNotLoading => !IsLoading;
     }

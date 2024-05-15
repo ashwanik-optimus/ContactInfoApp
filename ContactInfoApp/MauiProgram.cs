@@ -26,9 +26,9 @@ namespace ContactInfoApp
 
             builder.Services.AddSingleton<UsersListViewModel>();
             builder.Services.AddSingleton<UserDetailsViewModel>();
-            builder.Services.AddSingleton<MainPage>();
+            builder.Services.AddSingleton<UsersListPage>();
             builder.Services.AddTransient<UserDetailsPage>();
-            builder.Services.AddTransient<AddEditViewModel>();
+            builder.Services.AddTransient<AddEditUserDetailsViewModel>();
             builder.Services.AddTransient<AddEditUserDetailsPage>();
 
 #if DEBUG

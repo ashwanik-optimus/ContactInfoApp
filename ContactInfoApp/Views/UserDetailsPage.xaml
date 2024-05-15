@@ -43,13 +43,13 @@
 
             <Image
                     Aspect="AspectFit"
-                    Source="{Binding ProfilePicture}"
+                    Source="{Binding SelectedUser.ProfilePicture}"
                     HeightRequest="180"
                     WidthRequest="180"
                     VerticalOptions="Center"
                     HorizontalOptions="Center" />
         </Frame>
-        <Label Text="{Binding Sex}" Style="{StaticResource labelRedStyle}"
+        <Label Text="{Binding SelectedUser.Sex}" Style="{StaticResource labelRedStyle}"
                FontSize="18" TextColor="Red" HorizontalTextAlignment="Center" Margin="0,0,0,50"/>
         <Frame BorderColor="Black" Padding="5" CornerRadius="10" BackgroundColor="LightGrey">
             <Frame.GestureRecognizers>
@@ -57,7 +57,7 @@
             </Frame.GestureRecognizers>
             <HorizontalStackLayout Spacing="15" Padding="10">
                 <Image Source="email.png" HeightRequest="20"/>
-                <Label Text="{Binding Email}" FontSize="18" VerticalOptions="Center" TextColor="Black" />
+                <Label Text="{Binding SelectedUser.Email}" FontSize="18" VerticalOptions="Center" TextColor="Black" />
             </HorizontalStackLayout>
         </Frame>
         <Frame BorderColor="Black" Padding="5" CornerRadius="10" >
@@ -66,7 +66,7 @@
             </Frame.GestureRecognizers>
             <HorizontalStackLayout Spacing="15" Padding="10">
                 <Image Source="phone.png" HeightRequest="20"/>
-                <Label Text="{Binding MobileNumber}" Style="{StaticResource labelGreenStyle}" VerticalOptions="Center"/>
+                <Label Text="{Binding SelectedUser.MobileNumber}" Style="{StaticResource labelGreenStyle}" VerticalOptions="Center"/>
             </HorizontalStackLayout>
         </Frame>
 
@@ -76,7 +76,7 @@
             </Frame.GestureRecognizers>
             <HorizontalStackLayout Spacing="15" Padding="10">
                 <Image Source="location.png" HeightRequest="20"/>
-                <Label Text="{Binding Address}" FontSize="18" VerticalOptions="Center" TextColor="Black" />
+                <Label Text="{Binding SelectedUser.Address}" FontSize="18" VerticalOptions="Center" TextColor="Black" />
             </HorizontalStackLayout>
         </Frame>
         <Button Text="Edit Details" Style="{StaticResource labelBlueStyle}" Command="{Binding UpdateUserCommand}" Margin="9"/>

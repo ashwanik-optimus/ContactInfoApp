@@ -4,7 +4,7 @@ namespace ContactInfoApp.Views;
 
 public partial class AddEditUserDetailsPage : ContentPage
 {
-	public AddEditUserDetailsPage(AddEditViewModel addEditViewModel)
+	public AddEditUserDetailsPage(AddEditUserDetailsViewModel addEditViewModel)
 	{
 		InitializeComponent();
 		BindingContext = addEditViewModel;

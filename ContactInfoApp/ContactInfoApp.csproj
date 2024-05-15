@@ -75,6 +75,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="Views\UsersListPage.xaml.cs">
+	    <DependentUpon>UsersListPage.xaml</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
 	  <MauiXaml Update="Views\AddEditUserDetailsPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

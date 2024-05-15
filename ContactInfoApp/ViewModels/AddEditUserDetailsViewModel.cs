@@ -7,38 +7,23 @@ using System.Web;
 
 namespace ContactInfoApp.ViewModels
 {
-    [QueryProperty("Id", "Id")]
-    public partial class AddEditViewModel : BaseViewModel, IQueryAttributable
+    [QueryProperty(Constants.ID, Constants.ID)]
+    public partial class AddEditUserDetailsViewModel : BaseViewModel, IQueryAttributable
     {
         private int _userId;
 
         [ObservableProperty]
-        string name;
+        User selectedUser = new() { ProfilePicture = Constants.DEFAULTPICTURE };
 
         [ObservableProperty]
-        string email;
+        private string _saveEditText = Constants.ADDUSER;
 
         [ObservableProperty]
-        string mobileNumber;
-
-        [ObservableProperty]
-        string sex;
-
-        [ObservableProperty]
-        string address;
-
-        [ObservableProperty]
-        string profilePicture = "select3.png";
-
-        [ObservableProperty]
-        string saveEditText = Constants.ADDUSER;
-
-        [ObservableProperty]
-        bool isMale;
+        private bool _isMale;
 
         protected IUserService userService;
 
-        public AddEditViewModel(IUserService userService)
+        public AddEditUserDetailsViewModel(IUserService userService)
         {
             this.userService = userService;
         }
@@ -46,7 +31,7 @@ namespace ContactInfoApp.ViewModels
         public void ApplyQueryAttributes(IDictionary<string, object> query)
         {
 
-            _userId = Convert.ToInt32(HttpUtility.UrlDecode(query["Id"].ToString()));
+            _userId = Convert.ToInt32(HttpUtility.UrlDecode(query[Constants.ID].ToString()));
             if (_userId != 0)
             {
                 GetUserDetails(_userId);
@@ -59,12 +44,12 @@ namespace ContactInfoApp.ViewModels
             User user = userService.GetUser(id);
             if (user != null) 
             {
-                Name = user.Name;
-                Email = user.Email;
-                MobileNumber = user.MobileNumber;
-                Sex = user.Sex;
-                Address = user.Address;
-                ProfilePicture = user.ProfilePicture;
+                SelectedUser.Name = user.Name;
+                SelectedUser.Email = user.Email;
+                SelectedUser.MobileNumber = user.MobileNumber;
+                SelectedUser.Sex = user.Sex;
+                SelectedUser.Address = user.Address;
+                SelectedUser.ProfilePicture = user.ProfilePicture;
                 SaveEditText = Constants.UPDATEUSER;
             }
         }
@@ -72,20 +57,20 @@ namespace ContactInfoApp.ViewModels
         [RelayCommand]
         protected async Task AddUser()
         {
-            if (string.IsNullOrEmpty(Name) || string.IsNullOrEmpty(Email) || string.IsNullOrEmpty(MobileNumber))
+            if (string.IsNullOrEmpty(SelectedUser.Name) || string.IsNullOrEmpty(SelectedUser.Email) || string.IsNullOrEmpty(SelectedUser.MobileNumber))
             {
-                await Shell.Current.DisplayAlert("Invalid Data", "Please insert valid data", "Ok");
+                await Shell.Current.DisplayAlert(Constants.INVALIDDATA, Constants.INSERTVALIDDATA, Constants.OK);
                 return;
             }
 
             var user = new User
             {
-                Name = Name,
-                Email = Email,
-                MobileNumber = MobileNumber,
+                Name = SelectedUser.Name,
+                Email = SelectedUser.Email,
+                MobileNumber = SelectedUser.MobileNumber,
                 Sex = IsMale ? Constants.MALE : Constants.FEMALE,
-                Address = Address,
-                ProfilePicture = ProfilePicture,
+                Address = SelectedUser.Address,
+                ProfilePicture = SelectedUser.ProfilePicture,
             };
 
             if (string.Equals(SaveEditText, Constants.UPDATEUSER))
@@ -104,20 +89,20 @@ namespace ContactInfoApp.ViewModels
         [RelayCommand]
         private void ClearForm()
         {
-            Name = string.Empty;
-            MobileNumber = string.Empty;
-            Address = string.Empty;
-            Sex = string.Empty;
-            Email = string.Empty;
-            ProfilePicture = "select3.png";
+            SelectedUser.Name = string.Empty;
+            SelectedUser.MobileNumber = string.Empty;
+            SelectedUser.Address = string.Empty;
+            SelectedUser.Sex = string.Empty;
+            SelectedUser.Email = string.Empty;
+            SelectedUser.ProfilePicture = Constants.DEFAULTPICTURE;
         }
 
         [RelayCommand]
         async Task SelectMedia()
         {
-            var selection = await Shell.Current.DisplayActionSheet("Select Picture", "Cancel", null, ["Gallery", "Camera"]);
+            var selection = await Shell.Current.DisplayActionSheet(Constants.SELECTPICTURE, Constants.CANCEL, null, [Constants.GALLERY, Constants.CAMERA]);
 
-            if (string.Equals(selection, "Cancel")) { return; }
+            if (string.Equals(selection, Constants.CANCEL)) { return; }
 
             await SelectFromGallery(selection);
             await SelectCameraImage(selection);
@@ -125,35 +110,34 @@ namespace ContactInfoApp.ViewModels
 
         private async Task SelectCameraImage(string selection)
         {
-            if (string.Equals(selection, "Camera") && MediaPicker.Default.IsCaptureSupported)
+            if (string.Equals(selection, Constants.CAMERA) && MediaPicker.Default.IsCaptureSupported)
             {
                 FileResult photo = await MediaPicker.Default.CapturePhotoAsync();
                 if (photo != null)
                 {
-                    //string localFilePath = Path.Combine(FileSystem.CacheDirectory, photo.FileName);
                     string localFilePath = Path.Combine(FileSystem.AppDataDirectory, photo.FileName);
 
                     using Stream sourceStream = await photo.OpenReadAsync();
                     using FileStream localFileStream = File.OpenWrite(localFilePath);
                     await sourceStream.CopyToAsync(localFileStream);
 
-                    ProfilePicture = localFilePath;
+                    SelectedUser.ProfilePicture = localFilePath;
                 }
             }
         }
 
         private async Task SelectFromGallery(string selection)
         {
-            if (string.Equals(selection, "Gallery"))
+            if (string.Equals(selection, Constants.GALLERY))
             {
                 var result = await FilePicker.PickAsync(new PickOptions
                 {
-                    PickerTitle = "Select profile picture",
+                    PickerTitle = Constants.SELECTPROFILEPICTURE,
                     FileTypes = FilePickerFileType.Images
                 });
                 if (result != null)
                 {
-                    ProfilePicture = result.FullPath;
+                    SelectedUser.ProfilePicture = result.FullPath;
                 }
             }
         }

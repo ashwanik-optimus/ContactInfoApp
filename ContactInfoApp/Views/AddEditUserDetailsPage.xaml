@@ -7,7 +7,7 @@
              xmlns:local="clr-namespace:ContactInfoApp.Resources.Behaviors"
 
     Title="{Binding Title}"
-             x:DataType="vm:AddEditViewModel">
+             x:DataType="vm:AddEditUserDetailsViewModel">
     <ContentPage.Resources>
         <Style x:Key="labelDarkOrangeStyle" TargetType="Label">
             <Setter Property="WidthRequest" Value="65" />
@@ -38,7 +38,7 @@
 
         <HorizontalStackLayout Padding="5" Grid.Row="0" Margin="9" HorizontalOptions="Center">
             <Image x:Name="selectedImage"  
-                   Source="{Binding ProfilePicture,TargetNullValue='https://api.dicebear.com/7.x/bottts/png'}" 
+                   Source="{Binding SelectedUser.ProfilePicture,TargetNullValue='https://api.dicebear.com/7.x/bottts/png'}" 
                    HeightRequest="100"/>
             <Button x:Name="addImage" Text="+" HeightRequest="40" WidthRequest="40"  TextColor="Red"
                     VerticalOptions="End" BackgroundColor="Grey"
@@ -54,13 +54,13 @@
         <VerticalStackLayout Padding="5" Grid.Row="2" Margin="9">
             <HorizontalStackLayout  >
                 <Label Text="Name"  Style="{StaticResource labelDarkOrangeStyle}"/>
-                <Entry x:Name="Name" Placeholder="Enter Name" Style="{StaticResource entryDarkOrangeStyle}" Text="{Binding Name}" />
+                <Entry x:Name="Name" Placeholder="Enter Name" Style="{StaticResource entryDarkOrangeStyle}" Text="{Binding SelectedUser.Name}" />
             </HorizontalStackLayout>
             <HorizontalStackLayout>
                 <Label Text="Mobile" Style="{StaticResource labelDarkOrangeStyle}"/>
                 <Entry x:Name="Mobile"
                        Keyboard="Telephone" Placeholder="Enter Number" 
-                       Style="{StaticResource entryDarkOrangeStyle}" Text="{Binding MobileNumber}">
+                       Style="{StaticResource entryDarkOrangeStyle}" Text="{Binding SelectedUser.MobileNumber}">
                     <Entry.Behaviors>
                         <local:NumericValidationBehavior />
                     </Entry.Behaviors>
@@ -68,11 +68,11 @@
             </HorizontalStackLayout>
             <HorizontalStackLayout>
                 <Label Text="Email" Style="{StaticResource labelDarkOrangeStyle}"/>
-                <Entry x:Name="Email" Keyboard="Email" Placeholder="Enter Email" Style="{StaticResource entryDarkOrangeStyle}" Text="{Binding Email}"/>
+                <Entry x:Name="Email" Keyboard="Email" Placeholder="Enter Email" Style="{StaticResource entryDarkOrangeStyle}" Text="{Binding SelectedUser.Email}"/>
             </HorizontalStackLayout>
             <HorizontalStackLayout>
                 <Label Text="Address" Style="{StaticResource labelDarkOrangeStyle}"/>
-                <Entry x:Name="Address" Placeholder="Enter Address" Style="{StaticResource entryDarkOrangeStyle}" Text="{Binding Address}"/>
+                <Entry x:Name="Address" Placeholder="Enter Address" Style="{StaticResource entryDarkOrangeStyle}" Text="{Binding SelectedUser.Address}"/>
             </HorizontalStackLayout>
         </VerticalStackLayout>
 

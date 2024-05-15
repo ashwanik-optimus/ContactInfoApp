@@ -1,23 +1,30 @@
-﻿using SQLite;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using SQLite;
 
 namespace ContactInfoApp.Models
 {
     [Table("users")]
-    public class User
+    public partial class User : ObservableObject
     {
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
 
-        public string Name { get; set; }
+        [ObservableProperty]
+        string name;
 
-        public string Sex { get; set; }
+        [ObservableProperty]
+        private string sex;
 
-        public string Email { get; set; }
+        [ObservableProperty]
+        private string email;
 
-        public string Address { get; set; }
+        [ObservableProperty]
+        private string address;
 
-        public string MobileNumber { get; set; }
+        [ObservableProperty]
+        private string mobileNumber;
 
-        public string ProfilePicture { get; set; }
+        [ObservableProperty]
+        private string profilePicture;
     }
 }
